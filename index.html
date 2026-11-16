@@ -20,7 +20,7 @@
                 <span class="icon-box">🎨</span>
                 <span class="icon-label">Paint</span>
             </button>
-            <button class="icon" data-app="calculator">
+            <button class="icon" data-app="calc">
                 <span class="icon-box">🧮</span>
                 <span class="icon-label">Calculator</span>
             </button>
@@ -57,8 +57,66 @@
                 <input type="text" id="terminal-input" placeholder="Enter command..." autocomplete="off" />
             </div>
         </section>
+
+        <section class="window" id="window-paint">
+            <header class="window-header">
+                <span class="window-title">Paint</span>
+                <div class="window-controls">
+                    <button class="btn-close" data-close="window-paint">X</button>
+                </div>
+            </header>
+            <div class="window-body">
+                <canvas id="paint-canvas" width="340" height="200"></canvas>
+                <div class="paint-tools">
+                    <input type="color" id="paint-color" value="#000000"/>
+                    <input type="range" id="paint-size" min="1" max="20" value="3" />
+                    <button id="paint-clear">Clear</button>
+                    <button id="paint-save">Save</button>
+                </div>
+            </div>
+        </section>
+        
+        <section class="window" id="window-calc">
+            <header class="window-header">
+                <span class="window-title">Calculator</span>
+                <div class="window-controls">
+                    <button class="btn-close" data-close="window-calc">X</button>
+                </div>
+            </header>
+            <div class="window-body">
+                <div id="calc">
+                    <input type="text" id="calc-display" disabled />
+                    <div class="calc-grid">
+                        <button class="calc-btn" data-value="7">7</button>
+                        <button class="calc-btn" data-value="8">8</button>
+                        <button class="calc-btn" data-value="9">9</button>
+                        <button class="calc-btn" data-value="/">/</button>
+                        <button class="calc-btn" data-value="4">4</button>
+                        <button class="calc-btn" data-value="5">5</button>
+                        <button class="calc-btn" data-value="6">6</button>
+                        <button class="calc-btn" data-value="*">*</button>
+                        <button class="calc-btn" data-value="1">1</button>
+                        <button class="calc-btn" data-value="2">2</button>
+                        <button class="calc-btn" data-value="3">3</button>
+                        <button class="calc-btn" data-value="-">-</button>
+                        <button class="calc-btn" data-value="0">0</button>
+                        <button class="calc-btn" data-value=".">.</button>
+                        <button class="calc-btn" data-value="+">+</button>
+                        <button class="calc-btn" data-value="=">=</button>
+                        <button class="calc-btn" data-value="C" style="grid-column: span 4;">C</button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
     
+<div id="start-menu">
+    <div class="start-header">Retro OS v1.0</div>
+    <button class="start-item" data-app="notepad">📝 Notepad</button>
+    <button class="start-item" data-app="paint">🎨 Paint</button>
+    <button class="start-item" data-app="calc">🧮 Calculator</button>
+    <button class="start-item" data-app="terminal">💻 Terminal</button>
+</div>
     <footer id="taskbar">
         <button id="start-btn">Start</button>
         <div id="clock">12.00 AM</div>

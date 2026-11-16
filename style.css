@@ -110,17 +110,6 @@ body {
     padding: 0 8px;
 }
 
-#start-btn {
-    background-color: #c0c0c0;
-    border-top: 2px solid #ffffff;
-    border-left: 2px solid #ffffff;
-    border-right: 2px solid #404040;
-    border-bottom: 2px solid #404040;
-    padding: 3px 12px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
 #clock {
     border-top: 2px solid #808080;
     border-left: 2px solid #808080;
@@ -228,6 +217,45 @@ body {
     border-left: 2px solid #808080;
 }
 
+#calc-display {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 8px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+    background-color: #ffffff;
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
+.calc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+
+.calc-grid button {
+    padding: 8px;
+    font-weight: bold;
+    background-color: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #404040;
+    border-bottom: 2px solid #404040;
+    cursor: pointer;
+}
+
+.calc-grid button:active {
+    border-top: 2px solid #404040;
+    border-left: 2px solid #404040;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
 #terminal-input {
     width: 100%;
     background-color: black;
@@ -250,4 +278,56 @@ body {
     border-right: 1px solid #ffffff;
     border-bottom: 1px solid #ffffff;
     color: #202020;
+}
+
+#start-btn {
+    background-color: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #404040;
+    border-bottom: 2px solid #404040;
+    padding: 3px 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#start-menu {
+    position: absolute;
+    bottom: 36px;
+    left: 8px;
+    width: 180px;
+    background-color: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #404040;
+    border-bottom: 2px solid #404040;
+    display: none;
+    flex-direction: column;
+    z-index: 9999;
+}
+
+#start-menu.active {
+    display: flex;
+}
+
+.start-header {
+    background-color: #000080;
+    color: white;
+    padding: 6px 8px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.start-item {
+    background: none;
+    border: none;
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.start-item:hover {
+    background-color: #000080;
+    color: white;
 }

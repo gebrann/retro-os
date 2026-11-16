@@ -121,3 +121,100 @@ terminalInput.addEventListener('keydown', (e) => {
         }
     }
 });
+
+const canvas = document.getElementById('paint-canvas');
+const ctx = canvas.getContext('2d');
+const colorPicker = document.getElementById('paint-color');
+const sizePicker = document.getElementById('paint-size');
+const clearBtn = document.getElementById('paint-clear');
+const saveBtn = document.getElementById('paint-save');
+
+let isPainting = false;
+
+ctx.lineCap = 'round';
+ctx.lineJoin = 'round';
+
+canvas.addEventListener('mousedown', (e) => {
+    isPainting = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+});
+
+canvas.addEventListener('mousemove', (e) => {
+    if (!isPainting) return;
+    ctx.strokeStyle = colorPicker.value;
+    ctx.lineWidth = sizePicker.value;
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+});
+
+canvas.addEventListener('mouseup', () => {
+    isPainting = false;
+});
+
+canvas.addEventListener('mouseleave', () => {
+    isPainting = false;
+});
+
+clearBtn.addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+saveBtn.addEventListener('click', () => {
+    const dataURL = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = 'drawing.png';
+    link.click();
+});
+
+const startBtn = document.getElementById('start-btn');
+const startMenu = document.getElementById('start-menu');
+
+startBtn.addEventListener('click', () => {
+    startMenu.classList.toggle('active');
+});
+
+document.addEventListener('click', (e) => {
+    if (!startMenu.contains(e.target) && e.target !== startBtn) {
+        startMenu.classList.remove('active');
+    }
+});
+
+const startItems = document.querySelectorAll('.start-item');
+startItems.forEach((item) => {
+    item.addEventListener('click', () => {
+        const appName = item.dataset.app;
+        const targetWindow = document.getElementById(`window-${appName}`);
+        if (targetWindow) {
+            targetWindow.classList.add('active');
+            highestZ++;
+            targetWindow.style.zIndex = highestZ;
+        }
+        startMenu.classList.remove('active');
+    });
+});
+const calcDisplay = document.getElementById('calc-display');
+const calcButtons = document.querySelectorAll('.calc-btn');
+
+let currentCalc = '';
+calcButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        const value = btn.dataset.value;
+        if (value === 'C') {
+            currentCalc = '';
+            calcDisplay.value = '';
+        } else if (value === '=') {
+            try {
+                currentCalc = eval (currentCalc).toString();
+                calcDisplay.value = currentCalc;
+            } catch (error) {
+                calcDisplay.value = 'Error';
+            }
+        } else {
+            currentCalc += value;
+            calcDisplay.value = currentCalc;
+        }
+    
+    });
+});
