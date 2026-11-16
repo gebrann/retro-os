@@ -15,6 +15,17 @@ const icons = document.querySelectorAll('.icon');
 icons.forEach((icon) => {
     icon.addEventListener('click', () => {
         const appName = icon.dataset.app;
+        const targetWindow = document.getElementById(`window-${appName}`);
+        if (targetWindow) {
+            targetWindow.classList.add('active');
+        }
+    });
+});
+
+const closeBtns = document.querySelectorAll('.btn-close');
+closeBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        const windowId = btn.dataset.close;
         const targetWindow = document.getElementById(windowId);
         if (targetWindow) {
             targetWindow.classList.remove('active');
@@ -22,25 +33,54 @@ icons.forEach((icon) => {
     });
 });
 
-const notepadWin = document.getElementById("window-notepad");
-const notepadHeader = notepadWin.querySelector(".window-header");
+const windows = document.querySelectorAll('.window');
+let highestZ = 10;
 
-let isDragging = false;
-let offsetX = 0;
-let offsetY = 0;
+windows.forEach((win) => {
+    const header = win.querySelector('.window-header');
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
 
-notepadHeader.addEventListener("mousedown", (e) => {
-    isDragging = true;
-    offsetX = e.clientX - notepadWin.offsetLeft;
-    offsetY = e.clientY - notepadWin.offsetTop;
+    win.addEventListener('mousedown', () => {
+        highestZ++;
+        win.style.zIndex = highestZ;
+    });
+
+    header.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        offsetX = e.clientX - win.offsetLeft;
+        offsetY = e.clientY - win.offsetTop;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        win.style.left = `${e.clientX - offsetX}px`;
+        win.style.top = `${e.clientY - offsetY}px`;
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
 });
 
-document.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
-    notepadWin.style.left = '${e.clientX - offsetX}px';
-    notepadWin.style.top = '${e.clientY - offsetY}px';
-});
+const notepadText = document.getElementById("notepad-text");
+const notepadStatus = document.getElementById("notepad-status");
 
-document.addEventListener("mouseup", () => {
-    isDragging = false;
+function updateNotepadStatus() {
+    const text = notepadText.value;
+    const charCount = text.length;
+    const wordCount = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+    notepadStatus.textContent = `${charCount} character(s) | ${wordCount} word(s)`;
+}
+
+const savedNote = localStorage.getItem('retro-notepad-content');
+if (savedNote !== null) {
+    notepadText.value = savedNote;
+    updateNotepadStatus();
+}
+
+notepadText.addEventListener('input', () => {
+    localStorage.setItem('retro-notepad-content', notepadText.value);
+    updateNotepadStatus();
 });
