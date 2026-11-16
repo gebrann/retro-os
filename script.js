@@ -84,3 +84,40 @@ notepadText.addEventListener('input', () => {
     localStorage.setItem('retro-notepad-content', notepadText.value);
     updateNotepadStatus();
 });
+
+const terminalOutput = document.getElementById("terminal-output");
+const terminalInput = document.getElementById("terminal-input");
+
+function printTerminal(text) {
+    const p = document.createElement('p');
+    p.textContent = text;
+    terminalOutput.appendChild(p);
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+}
+
+terminalInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        const rawInput = terminalInput.value.trim();
+        const cmd = rawInput.toLowerCase();
+
+        if (rawInput !== '') {
+            printTerminal(`> ${rawInput}`);
+        }
+        terminalInput.value = '';
+
+        if (cmd === 'help') {
+            printTerminal('Commands: help, about, date, whoami, clear');
+        } else if (cmd === 'clear') {
+            terminalOutput.innerHTML = '';
+        } else if (cmd === 'about') {
+            printTerminal('it\'s a retro terminal simulation. it ain\'t real');
+        } else if (cmd === 'date') {
+            const now = new Date();
+            printTerminal(now.toString());
+        } else if (cmd === 'whoami') {
+            printTerminal('user');
+        } else if (cmd !== '') {
+            printTerminal(`Command not found: ${cmd}`);
+        }
+    }
+});
