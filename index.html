@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro OS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="titlebar">
+        <h1>Retro OS</h1>
+    </header>
+    <main id="desktop">
+        <div class="desktop-icons">
+            <button class="icon" data-app="notepad">
+                <span class="icon-box">📝</span>
+                <span class="icon-label">Notepad</span>
+            </button>
+            <button class="icon" data-app="paint">
+                <span class="icon-box">🎨</span>
+                <span class="icon-label">Paint</span>
+            </button>
+            <button class="icon" data-app="calculator">
+                <span class="icon-box">🧮</span>
+                <span class="icon-label">Calculator</span>
+            </button>
+            <button class="icon" data-app="terminal">
+                <span class="icon-box">💻</span>
+                <span class="icon-label">Terminal</span>
+            </button>
+        </div>
+
+        <section class="window active" id="window-notepad">
+            <header class="window-header">
+                <span class="window-title">Notepad</span>
+                <div class="window-controls">
+                    <button class="btn-close" data-close="window-notepad">X</button>
+                </div>
+            </header>
+            <div class="window-body">
+                <textarea placeholder="Write something here..."></textarea>
+            </div>
+        </section>
+
+        <section class="window" id="window-terminal">
+            <header class="window-header">
+                <span class="window-title">Terminal</span>
+                <div class="window-controls">
+                    <button class="btn-close" data-close="window-terminal">X</button>
+                </div>
+            </header>
+            <div class="window-body">
+                <div id="terminal-output">
+                    <p>Retro OS v1.0 - Type 'help' for commands.</p>
+                </div>
+                <input type="text" id="terminal-input" placeholder="Enter command..." autocomplete="off" />
+            </div>
+        </section>
+    </main>
+    
+    <footer id="taskbar">
+        <button id="start-btn">Start</button>
+        <div id="clock">12.00 AM</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
