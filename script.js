@@ -222,6 +222,7 @@ calcButtons.forEach((btn) => {
 
 const bgPicker = document.getElementById('bg-picker');
 const usernameInput = document.getElementById('username-input');
+const savedUsername = localStorage.getItem('retro-username');
 const saveSettingsBtn = document.getElementById('save-settings');
 
 bgPicker.addEventListener('input', () => {
@@ -231,5 +232,11 @@ bgPicker.addEventListener('input', () => {
 saveSettingsBtn.addEventListener('click', () => {
     if (usernameInput.value.trim() !== '') {
         username = usernameInput.value.trim();
+        localStorage.setItem('retro-username', username);
     }
 })
+
+if (savedUsername !== null) {
+    username = savedUsername;
+    usernameInput.value = savedUsername;
+}
