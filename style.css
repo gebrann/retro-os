@@ -305,6 +305,63 @@ body {
     line-height: 1.5;
 }
 
+/* file explorer */
+.explorer-tools {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
+.explorer-tools button {
+    padding: 2px 8px;
+    background-color: #c0c0c0;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #404040;
+    border-bottom: 1px solid #404040;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#explorer-path {
+    background-color: #ffffff;
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    padding: 3px 6px;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+#explorer-list {
+    background-color: #ffffff;
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    height: 150px;
+    padding: 8px;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 8px;
+}
+
+#explorer-list button {
+    background: none;
+    border: 1px solid transparent;
+    padding: 4px 6px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#explorer-list button:hover {
+    background-color: #000080;
+    color: white;
+}
+
 /* start menu */
 #start-btn {
     background-color: #c0c0c0;

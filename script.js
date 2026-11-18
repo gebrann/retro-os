@@ -83,6 +83,13 @@ if (savedNote !== null) {
 notepadText.addEventListener('input', () => {
     localStorage.setItem('retro-notepad-content', notepadText.value);
     updateNotepadStatus();
+    if (currentFileId !== null) {
+        const file = explorerData.find(item =>  item.id === currentFileId);
+        if(file) {
+            file.content = notepadText.value;
+            localStorage.setItem('retro-files', JSON.stringify(explorerData));
+        }
+    }
 });
 
 let username = 'user';
@@ -240,3 +247,75 @@ if (savedUsername !== null) {
     username = savedUsername;
     usernameInput.value = savedUsername;
 }
+
+let explorerData = JSON.parse(localStorage.getItem('retro-files')) || [];
+let currentFolder = 'root';
+let currentFileId = null;
+let newFileButton = document.getElementById('btn-new-file');
+let newFolderButton = document.getElementById('btn-new-folder');
+let backButton = document.getElementById('btn-back');
+let explorerContent = document.getElementById('explorer-list');
+let explorerPath = document.getElementById('explorer-path')
+
+function renderExplorer() {
+    explorerContent.innerHTML = '';
+    const items = explorerData.filter(item => item.parentId === currentFolder);
+    items.forEach(item => {
+        const btn = document.createElement('button');
+        btn.textContent = (item.type === 'folder' ? '📁 ' : '📄 ') + item.name;
+        btn.addEventListener('click', () => {
+            if (item.type === 'folder') {
+                currentFolder = item.id;
+                renderExplorer();
+            } else if (item.type === 'file') {
+                currentFileId = item.id;
+                const fileContent = item.content || '';
+                notepadText.value = fileContent;
+                updateNotepadStatus();
+                const notepadWin = document.getElementById('window-notepad');
+                notepadWin.classList.add('active');
+                highestZ++;
+                notepadWin.style.zIndex = highestZ;
+            }
+        })
+        explorerContent.appendChild(btn);
+    })
+}
+
+newFileButton.addEventListener('click', () => {
+    const fileName = prompt("what's da file name?");
+    if (!fileName) return;
+
+    explorerData.push({
+        id: Date.now(),
+        name: fileName,
+        type: 'file',
+        parentId: currentFolder,
+        content: ''
+    });
+
+    localStorage.setItem('retro-files', JSON.stringify(explorerData));
+    renderExplorer();
+});
+
+newFolderButton.addEventListener('click', () => {
+    const folderName = prompt("what's da folder name?");
+    if (!folderName) return;
+    explorerData.push({
+        id: Date.now(),
+        name: folderName,
+        type: 'folder',
+        parentId: currentFolder,
+    });
+    localStorage.setItem('retro-files', JSON.stringify(explorerData));
+    renderExplorer();
+});
+
+backButton.addEventListener('click', () => {
+    if (currentFolder === 'root') return;
+    const folder = explorerData.find(item => item.id === currentFolder);
+    currentFolder = folder ? folder.parentId : 'root';
+    renderExplorer();
+});
+
+renderExplorer();
