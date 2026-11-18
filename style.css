@@ -299,6 +299,12 @@ body {
     cursor: pointer;
 }
 
+/* about */
+#window-about {
+    text-align: center;
+    line-height: 1.5;
+}
+
 /* start menu */
 #start-btn {
     background-color: #c0c0c0;
