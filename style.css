@@ -280,6 +280,26 @@ body {
     color: #202020;
 }
 
+/* settings */
+#window-settings input[type="text"] {
+    padding: 4px;
+    border-top: 2px solid #808080;
+    border-left: 2px solid #808080;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
+#save-settings {
+    padding: 4px 10px;
+    background-color: #c0c0c0;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #404040;
+    border-bottom: 1px solid #404040;
+    cursor: pointer;
+}
+
+/* start menu */
 #start-btn {
     background-color: #c0c0c0;
     border-top: 2px solid #ffffff;

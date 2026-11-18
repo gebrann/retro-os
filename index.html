@@ -28,9 +28,13 @@
                 <span class="icon-box">💻</span>
                 <span class="icon-label">Terminal</span>
             </button>
+            <button class="icon" data-app="settings">
+                <span class="icon-box">⚙️</span>
+                <span class="icon-label">Settings</span>
+            </button>
         </div>
 
-        <section class="window active" id="window-notepad">
+        <section class="window" id="window-notepad">
             <header class="window-header">
                 <span class="window-title">Notepad</span>
                 <div class="window-controls">
@@ -108,6 +112,24 @@
                 </div>
             </div>
         </section>
+
+        <section class="window" id="window-settings">
+            <header class="window-header">
+                <span class="window-title">Settings</span>
+                <div class="window-controls">
+                    <button class="btn-close" data-close="window-settings">X</button>
+                </div>
+            </header>
+            <div class="window-body">
+                <label>Desktop Color:</label>
+                <input type="color" id="bg-picker" value="#008080" />
+                <br><br>
+                <label>Username:</label>
+                <input type="text"  id="username-input" placeholder="user" />
+                <br><br>
+                <button id="save-settings">Save</button>
+            </div>
+        </section>
     </main>
     
 <div id="start-menu">
@@ -115,6 +137,7 @@
     <button class="start-item" data-app="notepad">📝 Notepad</button>
     <button class="start-item" data-app="paint">🎨 Paint</button>
     <button class="start-item" data-app="calc">🧮 Calculator</button>
+    <button class="start-item" data-app="settings">⚙️ Settings</button>
     <button class="start-item" data-app="terminal">💻 Terminal</button>
 </div>
     <footer id="taskbar">

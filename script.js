@@ -85,6 +85,7 @@ notepadText.addEventListener('input', () => {
     updateNotepadStatus();
 });
 
+let username = 'user';
 const terminalOutput = document.getElementById("terminal-output");
 const terminalInput = document.getElementById("terminal-input");
 
@@ -115,7 +116,7 @@ terminalInput.addEventListener('keydown', (e) => {
             const now = new Date();
             printTerminal(now.toString());
         } else if (cmd === 'whoami') {
-            printTerminal('user');
+            printTerminal(username);
         } else if (cmd !== '') {
             printTerminal(`Command not found: ${cmd}`);
         }
@@ -218,3 +219,17 @@ calcButtons.forEach((btn) => {
     
     });
 });
+
+const bgPicker = document.getElementById('bg-picker');
+const usernameInput = document.getElementById('username-input');
+const saveSettingsBtn = document.getElementById('save-settings');
+
+bgPicker.addEventListener('input', () => {
+    document.body.style.backgroundColor = bgPicker.value;
+});
+
+saveSettingsBtn.addEventListener('click', () => {
+    if (usernameInput.value.trim() !== '') {
+        username = usernameInput.value.trim();
+    }
+})
