@@ -28,10 +28,13 @@
                 <span class="icon-box">💻</span>
                 <span class="icon-label">Terminal</span>
             </button>
-            <button class="icon" data-app="explorer"></button>
             <button class="icon" data-app="explorer">
                 <span class="icon-box">📁</span>
                 <span class="icon-label">File Explorer</span>
+            </button>
+            <button class="icon" data-app="snake">
+                <span class="icon-box">🐍</span>
+                <span class="icon-label">Snake</span>
             </button>
             <button class="icon" data-app="about">
                 <span class="icon-box">ℹ️</span>
@@ -168,6 +171,20 @@
                 </div>
                 <div id="explorer-path">/</div>
                 <div id="explorer-list"></div>
+            </div>
+        </section>
+
+        <section class="window" id="window-snake">
+            <header class="window-header">
+                <span class="window-title">Snake</span>
+                <div class="window-controls">
+                    <button class="btn-close" data-close="window-snake">X</button>
+                </div>
+            </header>
+            <div class="window-body">
+                <div>Score: <span id="snake-score">0</span></div>
+                <canvas id="snake-canvas" width="300" height="200"></canvas>
+                <button id="snake-start">Start Game</button>
             </div>
         </section>
     </main>

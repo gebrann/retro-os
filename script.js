@@ -62,6 +62,26 @@ windows.forEach((win) => {
     document.addEventListener('mouseup', () => {
         isDragging = false;
     });
+
+    header.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        highestZ++;
+        win.style.zIndex = highestZ;
+        const touch = e.touches[0];
+        offsetX = touch.clientX - win.offsetLeft;
+        offsetY = touch.clientY - win.offsetTop;
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const touch = e.touches[0];
+        win.style.left = `${touch.clientX - offsetX}px`;
+        win.style.top = `${touch.clientY - offsetY}px`;
+    });
+
+    document.addEventListener('touchend', () => {
+        isDragging = false;
+    })
 });
 
 const notepadText = document.getElementById("notepad-text");
@@ -161,6 +181,30 @@ canvas.addEventListener('mouseup', () => {
 });
 
 canvas.addEventListener('mouseleave', () => {
+    isPainting = false;
+});
+
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefauld();
+    isPainting = true;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    ctx.beginPath();
+    ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+}, { passive: false });
+
+canvas.addEventListener('touchmove', (e) => {
+    if (!isPainting) return;
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    ctx.strokeStyle = colorPicker.value;
+    ctx.lineWidth = sizePicker.value;
+    ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+    ctx.stroke();
+}, { passive: false });
+
+canvas.addEventListener('touchend', () => {
     isPainting = false;
 });
 
@@ -319,3 +363,77 @@ backButton.addEventListener('click', () => {
 });
 
 renderExplorer();
+
+const snakeCanvas = document.getElementById('snake-canvas');
+const snakeCtx = snakeCanvas.getContext('2d');
+const snakeScoreEl = document.getElementById('snake-score');
+const snakeStartBtn = document.getElementById('snake-start');
+
+let snake = [{ x: 150, y: 100 }];
+let food = { x:60, y: 60 };
+let dx = 10;
+let dy = 0;
+let score = 0;
+let gameInterval = null;
+
+function drawSnake() {
+    snakeCtx.clearRect(0, 0, 300, 200);
+
+    snakeCtx.fillStyle = 'red';
+    snakeCtx.fillRect(food.x, food.y, 10, 10);
+
+    snakeCtx.fillStyle = '#00ff00';
+    snake.forEach(part => {
+        snakeCtx.fillRect(part.x, part.y, 10, 10);
+    });
+};
+
+function moveSnake() {
+    const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+
+    const hitWall = head.x < 0 || head.x >= 300 || head.y < 0 || head.y >= 200;
+    const hitSelf = snake.some(part => part.x === head.x && part.y === head.y);
+
+    if (hitWall || hitSelf) {
+        clearInterval(gameInterval);
+        alert('Game Over! Score: ' + score);
+        return;
+    }
+
+    snake.unshift(head);
+
+    if (head.x === food.x && head.y === food.y) {
+        score += 10;
+        snakeScoreEl.textContent = score;
+        food = {
+            x: Math.floor(Math.random() * 30) * 10,
+            y: Math.floor(Math.random() * 20) *10
+        };
+    }   else {
+        snake.pop();
+    }
+
+    drawSnake();
+}
+
+snakeStartBtn.addEventListener('click', () => {
+    snake = [{ x: 150, y: 100 }];
+    dx = 10;
+    dy = 0;
+    score = 0;
+    snakeScoreEl.textContent = score;
+
+    clearInterval(gameInterval);
+    drawSnake();
+    gameInterval = setInterval(moveSnake, 120);
+});
+
+document.addEventListener('keydown', (e) => {
+    const snakeWin = document.getElementById('window-snake');
+    if (!snakeWin.classList.contains('active')) return;
+
+    if (e.key === 'ArrowUp' && dy === 0) { dx = 0; dy = -10; }
+    if (e.key === 'ArrowDown' && dy === 0) { dx = 0; dy = 10; }
+    if (e.key === 'ArrowLeft' && dx === 0 ) { dx = -10; dy = 0; }
+    if (e.key === 'ArrowRight' && dx === 0) { dx = 10; dy = 0; }
+});
