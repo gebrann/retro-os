@@ -20,6 +20,8 @@ icons.forEach((icon) => {
             targetWindow.classList.add('active');
         }
     });
+    highestZ++;
+    targetWindow.style.zIndex = highestZ;
 });
 
 const closeBtns = document.querySelectorAll('.btn-close');
@@ -185,7 +187,7 @@ canvas.addEventListener('mouseleave', () => {
 });
 
 canvas.addEventListener('touchstart', (e) => {
-    e.preventDefauld();
+    e.preventDefault();
     isPainting = true;
     const rect = canvas.getBoundingClientRect();
     const touch = e.touches[0];
