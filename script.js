@@ -10,6 +10,8 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
+let highestZ = 10;
+
 /* da open-close window */
 const icons = document.querySelectorAll('.icon');
 icons.forEach((icon) => {
@@ -18,10 +20,10 @@ icons.forEach((icon) => {
         const targetWindow = document.getElementById(`window-${appName}`);
         if (targetWindow) {
             targetWindow.classList.add('active');
+            highestZ++;
+            targetWindow.style.zIndex = highestZ;
         }
     });
-    highestZ++;
-    targetWindow.style.zIndex = highestZ;
 });
 
 const closeBtns = document.querySelectorAll('.btn-close');
@@ -36,7 +38,6 @@ closeBtns.forEach((btn) => {
 });
 
 const windows = document.querySelectorAll('.window');
-let highestZ = 10;
 
 windows.forEach((win) => {
     const header = win.querySelector('.window-header');
@@ -438,4 +439,15 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowDown' && dy === 0) { dx = 0; dy = 10; }
     if (e.key === 'ArrowLeft' && dx === 0 ) { dx = -10; dy = 0; }
     if (e.key === 'ArrowRight' && dx === 0) { dx = 10; dy = 0; }
+});
+
+const snakeDirBtns = document.querySelectorAll('.snake-dir');
+snakeDirBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        const dir = btn.dataset.dir;
+        if (dir === 'up' && dy === 0) { dx = 0; dy = -10; }
+        if (dir === 'down' && dy === 0) { dx = 0; dy = 10; }
+        if (dir === 'left' && dx === 0) { dx = -10; dy = 0; }
+        if (dir === 'right' && dx === 0) { dx = 10; dy = 0; }
+    });
 });
