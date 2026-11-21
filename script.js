@@ -396,6 +396,9 @@ renderExplorer();
 const snakeCanvas = document.getElementById('snake-canvas');
 const snakeCtx = snakeCanvas.getContext('2d');
 const snakeScoreEl = document.getElementById('snake-score');
+const snakeHighEl = document.getElementById('snake-highscore');
+let highScore = Number(localStorage.getItem('retro-snake-highscore')) || 0;
+snakeHighEl.textContent = highScore;
 const snakeStartBtn = document.getElementById('snake-start');
 
 let snake = [{ x: 150, y: 100 }];
@@ -434,6 +437,11 @@ function moveSnake() {
     if (head.x === food.x && head.y === food.y) {
         score += 10;
         snakeScoreEl.textContent = score;
+            if (score > highScore) {
+        highScore = score;
+        snakeHighEl.textContent = highScore;
+        localStorage.setItem('retro-snake-highscore', highScore);
+    }
         food = {
             x: Math.floor(Math.random() * 30) * 10,
             y: Math.floor(Math.random() * 20) *10
