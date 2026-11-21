@@ -137,7 +137,14 @@ terminalInput.addEventListener('keydown', (e) => {
         terminalInput.value = '';
 
         if (cmd === 'help') {
-            printTerminal('Commands: help, about, date, whoami, clear');
+            printTerminal('Available commands:');
+            printTerminal('     help - u just did it');
+            printTerminal('     clear - clears the terminal');
+            printTerminal('     about - infos about this terminal');
+            printTerminal('     date - shows the current date n time');
+            printTerminal('     whoami - shows ur username');
+            printTerminal('     ls - lists files n folders in ur current dir/folder');
+            printTerminal('     echo ... - prints whatever u type after echo');
         } else if (cmd === 'clear') {
             terminalOutput.innerHTML = '';
         } else if (cmd === 'about') {
@@ -147,7 +154,19 @@ terminalInput.addEventListener('keydown', (e) => {
             printTerminal(now.toString());
         } else if (cmd === 'whoami') {
             printTerminal(username);
-        } else if (cmd !== '') {
+        } else if (cmd === 'ls') {
+            const items = explorerData.filter(item => item.parentId === currentFolder);
+            if (items.length === 0) {
+                printTerminal('(empty folder)');
+            } else {
+                const list = items.map(item => (item.type === 'folder' ? `[DIR] ${item.name}` : item.name)).join('  |  ');
+                printTerminal(list);
+            }
+        }
+         else if (cmd.startsWith('echo ')) {
+            printTerminal(rawInput.slice(5));
+        }
+         else if (cmd !== '') {
             printTerminal(`Command not found: ${cmd}`);
         }
     }
@@ -277,6 +296,7 @@ calcButtons.forEach((btn) => {
 const bgPicker = document.getElementById('bg-picker');
 const usernameInput = document.getElementById('username-input');
 const savedUsername = localStorage.getItem('retro-username');
+const savedBg = localStorage.getItem('retro-bg');
 const saveSettingsBtn = document.getElementById('save-settings');
 
 bgPicker.addEventListener('input', () => {
@@ -288,11 +308,17 @@ saveSettingsBtn.addEventListener('click', () => {
         username = usernameInput.value.trim();
         localStorage.setItem('retro-username', username);
     }
+    localStorage.setItem('retro-bg', bgPicker.value);
 })
 
 if (savedUsername !== null) {
     username = savedUsername;
     usernameInput.value = savedUsername;
+}
+
+if (savedBg !== null) {
+    document.body.style.backgroundColor = savedBg;
+    bgPicker.value = savedBg;
 }
 
 let explorerData = JSON.parse(localStorage.getItem('retro-files')) || [];
